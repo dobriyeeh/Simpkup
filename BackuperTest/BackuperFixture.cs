@@ -31,11 +31,19 @@ namespace BackuperTest
             };
         }
 
+        [Test]
         public void TestRules()
         {
-            //var backupRule = new BackupRule(_dataPlace, _config); 
+            var backupRule = new BackupRule(_dataPlace, _config);
+            var actionMock = new Mock<IBackupAction>();
+            
+            var backuper = new Backuper(actionMock.Object, backupRule);
 
+            _testedData.ChangeFile();
 
+            backuper.Update();
+
+            actionMock.Verify(act => act.Backup());
         }
 
     }

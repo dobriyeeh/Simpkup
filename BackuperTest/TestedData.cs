@@ -28,6 +28,8 @@ namespace BackuperTest
 
         public string DirDestination => TestContext.CurrentContext.TestDirectory + "\\Destination";
 
+        public string[] PreparedFiles { get; set; }
+
         private string[] PrepareFiles(string dirName)
         {
             var files = new List<string>();
@@ -50,6 +52,11 @@ namespace BackuperTest
             return files.ToArray();
         }
 
+        public void ChangeFile()
+        {
+            File.AppendAllText(PreparedFiles.First(), "TEMBRU");
+        }
+
         private void PrepareFiles()
         {
             if (Directory.Exists(DirPath))
@@ -60,7 +67,7 @@ namespace BackuperTest
 
             Directory.CreateDirectory(DirDestination);
 
-            var files = PrepareFiles(TestContext.CurrentContext.Test.Name);
+            PreparedFiles = PrepareFiles(TestContext.CurrentContext.Test.Name);
         }
 
         public void Clean()

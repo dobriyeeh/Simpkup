@@ -17,7 +17,7 @@ namespace BackupService
             _backupRule = backupRule;
         }
 
-        public void OnBackupTime()
+        public void Update()
         {
             if (_backupRule.IsItTimeToBackup)
                 _backupAction.Backup();

@@ -13,7 +13,7 @@ namespace BackupService
         public DirectoryIdentity(string dirPath)
         {
             SnapshotTime = DateTime.Now;
-            Identity = HashUtils.CalculateDirectoryMd5(dirPath);
+            Identity     = HashUtils.CalculateDirectoryMd5(dirPath);
         }
 
         public string Identity { get; } 
@@ -22,10 +22,11 @@ namespace BackupService
 
         public override bool Equals(object obj)
         {
-            if (!(obj is DirectoryIdentity))
+            var otherDirectoryIdentity = obj as DirectoryIdentity;
+            if (otherDirectoryIdentity == null)
                 return false;
 
-            return Identity.Equals(((DirectoryIdentity)obj).Identity);
+            return Identity.Equals(otherDirectoryIdentity.Identity);
         }
 
         public override int GetHashCode()

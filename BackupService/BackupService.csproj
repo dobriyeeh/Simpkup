@@ -55,6 +55,7 @@
     <Compile Include="BackupService.Designer.cs">
       <DependentUpon>BackupService.cs</DependentUpon>
     </Compile>
+    <Compile Include="BackupState.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DataPlace.cs" />
     <Compile Include="DirectoryIdentity.cs" />

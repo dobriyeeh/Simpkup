@@ -20,14 +20,14 @@ namespace BackuperTest
         [SetUp]
         public void Setup()
         {
-            _testedData = new TestedData();
-            _dataPlace = new DataPlace(TestDirPath);
-            _config = new Config()
+            _testedData         = new TestedData();
+            _dataPlace          = new DataPlace(TestDirPath);
+            _config             = new Config()
             {
-                BackupPath = TestDirPath,
-                ScheduleTime = TimeSpan.FromSeconds(1),
-                UsePassword = false,
-                Password = null
+                BackupPath      = TestDirPath,
+                ScheduleTime    = TimeSpan.FromSeconds(1),
+                UsePassword     = false,
+                Password        = null
             };
         }
 

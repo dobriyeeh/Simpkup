@@ -8,22 +8,28 @@ namespace BackupService
 {
     public class BackupRule : IBackupRule
     {
-        private DirectoryIdentity _directoryIdentity;
+        private readonly DataPlace  _dataPlace;
+        private readonly Config     _config;
 
-        private readonly DataPlace _dataPlace;
-        private readonly Config _config;
+        private DirectoryIdentity   _initalIdentity;
 
-        public bool IsTimeOverdue { get; }
+        public bool IsTimeOverdue    => (DateTime.Now - _initalIdentity.SnapshotTime) > _config.ScheduleTime;
 
-        public bool AreFilesChanged { get; }
+        public bool AreFilesChanged  => !_initalIdentity.Equals(_dataPlace.ActualIdentity);
 
         public bool IsItTimeToBackup => IsTimeOverdue || AreFilesChanged;
         
         public BackupRule(DataPlace dataPlace, Config config)
         {
-            _dataPlace = dataPlace;
-            _config = config;
+            _dataPlace  = dataPlace;
+            _config     = config;
+
+            Reset();
         }
 
+        public void Reset()
+        {
+            _initalIdentity = _dataPlace.ActualIdentity;
+        }
     }
 }

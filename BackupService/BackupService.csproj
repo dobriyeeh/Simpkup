@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="DataAction.cs" />
+    <Compile Include="InformationKeeper.cs" />
     <Compile Include="DataPlace.cs" />
     <Compile Include="DirectoryIdentity.cs" />
     <Compile Include="HashUtils.cs" />

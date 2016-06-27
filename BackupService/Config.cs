@@ -8,7 +8,7 @@ namespace BackupService
 {
     public struct Config
     {
-        public string BackupPath { get; set; }
+        public string BackupFrom { get; set; }
 
         public string BackupTo { get; set; }
 

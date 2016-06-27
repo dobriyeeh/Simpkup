@@ -19,7 +19,12 @@ namespace BackupService
 
         public void Backup()
         {
-            new DataAction(_dataPlace).ArchiveTo(_config.BackupPath);
+            var dataAction = new DataAction(_dataPlace);
+
+            if (_config.ArchiveData)
+                dataAction.ArchiveTo(_config.BackupFrom);
+            else
+                dataAction.CopyTo(_config.BackupFrom);
         }
     }
 }

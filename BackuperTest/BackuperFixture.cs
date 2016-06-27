@@ -11,22 +11,22 @@ using BackupService;
 namespace BackuperTest
 {
     [TestFixture]
-    class BackuperFixture
+    class BackuperAndDataKeeperFixture
     {
         private TestedData  _testedData;
         private DataPlace   _dataPlace;
         private Config      _config;
 
-        public string TestDirPath => _testedData.DirPath;
-
         [SetUp]
         public void Setup()
         {
             _testedData         = new TestedData();
-            _dataPlace          = new DataPlace(TestDirPath);
+            _dataPlace          = new DataPlace(_testedData.DirPath);
             _config             = new Config()
             {
-                BackupPath      = TestDirPath,
+                BackupFrom      = _testedData.DirPath,
+                BackupTo        = _testedData.DirDestination,
+                ArchiveData     = true,
                 ScheduleTime    = TimeSpan.FromSeconds(1),
                 UsePassword     = false,
                 Password        = null
@@ -61,5 +61,12 @@ namespace BackuperTest
             actionMock.Verify(act => act.Backup());
         }
 
+        public void TestDataKeeper()
+        {
+            var keeper = new InformationKeeper(_config);
+            keeper.Start();
+            //Thread.Sleep()
+            keeper.Stop();
+        }
     }
 }

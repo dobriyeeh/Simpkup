@@ -10,7 +10,12 @@ namespace BackupService
     {
         public string BackupPath { get; set; }
 
+        public string BackupTo { get; set; }
+
         public TimeSpan ScheduleTime { get; set; }
+
+        // true - archive, false - copy
+        public bool ArchiveData { get; set; }
 
         public bool UsePassword { get; set; }
 

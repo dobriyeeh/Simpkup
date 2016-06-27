@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BackupService
 {
-    public class Backuper
+    public class Backuper : IBackuper
     {
         private readonly IBackupAction _backupAction;
-        private readonly IBackupRule _backupRule;
+        private readonly IBackupRule   _backupRule;
 
         public Backuper(IBackupAction backupAction, IBackupRule backupRule)
         {

@@ -55,15 +55,17 @@
     <Compile Include="BackupService.Designer.cs">
       <DependentUpon>BackupService.cs</DependentUpon>
     </Compile>
-    <Compile Include="BackupState.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="DataAction.cs" />
     <Compile Include="DataPlace.cs" />
     <Compile Include="DirectoryIdentity.cs" />
     <Compile Include="HashUtils.cs" />
     <Compile Include="IBackupAction.cs" />
+    <Compile Include="IBackuper.cs" />
     <Compile Include="IBackupRule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

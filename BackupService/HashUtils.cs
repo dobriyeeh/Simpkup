@@ -18,8 +18,10 @@ namespace BackupService
             {
                 foreach (var filePath in filePaths)
                 {
+                    string relativePath = filePath.Substring(srcPath.Length);
+
                     // hash path
-                    byte[] pathBytes = Encoding.UTF8.GetBytes(filePath);
+                    byte[] pathBytes = Encoding.UTF8.GetBytes(relativePath);
                     md5.TransformBlock(pathBytes, 0, pathBytes.Length, pathBytes, 0);
 
                     // hash contents

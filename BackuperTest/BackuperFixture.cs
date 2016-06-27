@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using NUnit.Framework;
 using Moq;
 using BackupService;
 
 namespace BackuperTest
 {
+    [TestFixture]
     class BackuperFixture
     {
-        private TestedData _testedData;
-        private DataPlace _dataPlace;
-        private Config _config;
+        private TestedData  _testedData;
+        private DataPlace   _dataPlace;
+        private Config      _config;
 
         public string TestDirPath => _testedData.DirPath;
 
@@ -30,6 +32,19 @@ namespace BackuperTest
                 Password        = null
             };
         }
+
+        [Test]
+        public void TestSimpleRules()
+        {
+            var backupRule = new BackupRule(_dataPlace, _config);
+            _testedData.ChangeFile();
+
+            Assert.IsTrue(backupRule.AreFilesChanged);
+            Assert.IsFalse(backupRule.IsTimeOverdue);
+            Thread.Sleep(1000);
+            Assert.IsTrue(backupRule.IsTimeOverdue);
+        }
+
 
         [Test]
         public void TestRules()

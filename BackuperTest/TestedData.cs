@@ -20,7 +20,7 @@ namespace BackuperTest
         {
             get
             {
-                string path = TestContext.CurrentContext.Test.Name;
+                string path    = TestContext.CurrentContext.Test.Name;
                 string testDir = TestContext.CurrentContext.TestDirectory + "\\" + path;
                 return testDir;
             }

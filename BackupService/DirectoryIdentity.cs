@@ -15,7 +15,7 @@ namespace BackupService
             SnapshotTime = DateTime.Now;
             Identity     = HashUtils.CalculateDirectoryMd5(dirPath);
         }
-
+        
         public string Identity { get; } 
 
         public DateTime SnapshotTime { get; set; }

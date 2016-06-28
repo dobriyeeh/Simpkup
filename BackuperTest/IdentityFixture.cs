@@ -45,5 +45,11 @@ namespace BackuperTest
             var newIdentity = new DirectoryIdentity(TestDirPath);
             Assert.AreNotEqual(identity1, newIdentity);
         }
+
+        [Test]
+        public void PerformanceIdentity()
+        {
+            var newIdentity = new DirectoryIdentity(_testedData.PerformanceDataPath);
+        }
     }
 }

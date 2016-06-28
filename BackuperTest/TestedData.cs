@@ -26,6 +26,8 @@ namespace BackuperTest
             }
         }
 
+        public string PerformanceDataPath => Directory.GetParent(Directory.GetParent(TestContext.CurrentContext.WorkDirectory).ToString()) + "\\PerformanceData";
+
         public string DirDestination => TestContext.CurrentContext.TestDirectory + "\\Destination";
 
         public string[] PreparedFiles { get; set; }
@@ -54,7 +56,7 @@ namespace BackuperTest
 
         public void ChangeFile()
         {
-            File.AppendAllText(PreparedFiles.First(), "TEMBRU");
+            File.AppendAllText(PreparedFiles.First(), "\n" + Guid.NewGuid().ToString());
         }
 
         private void PrepareFiles()

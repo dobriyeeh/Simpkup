@@ -18,7 +18,7 @@ namespace BackupService
 
         public string Identity { get; } 
 
-        public DateTime SnapshotTime { get; }
+        public DateTime SnapshotTime { get; set; }
 
         public override bool Equals(object obj)
         {

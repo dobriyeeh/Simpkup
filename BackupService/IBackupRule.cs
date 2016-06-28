@@ -8,9 +8,6 @@ namespace BackupService
 {
     public interface IBackupRule
     {
-        bool IsTimeOverdue { get; }
-        bool AreFilesChanged { get; }
-
         bool IsItTimeToBackup { get; }
     }
 }

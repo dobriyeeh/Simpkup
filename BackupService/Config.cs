@@ -6,19 +6,32 @@ using System.Threading.Tasks;
 
 namespace BackupService
 {
+    public enum BackupCondition
+    {
+        AlwaysSchedulePeriod,
+        AlwaysAtTheCertainTime,
+        SchedulePeriodIfChanged,
+        AtTheCertainTimeIfChanged
+    }
+
+    public enum BackupMethod
+    {
+        Archive,
+        Copy
+    }
+
     public struct Config
     {
-        public string BackupFrom { get; set; }
+        public string           backupFromPath;
+        public string           backupToPath;
 
-        public string BackupTo { get; set; }
+        public BackupCondition  backupCondition;
+        public BackupMethod     backupMethod;
 
-        public TimeSpan ScheduleTime { get; set; }
+        public TimeSpan         schedulePeriod;
+        public DateTime         certainTime;
 
-        // true - archive, false - copy
-        public bool ArchiveData { get; set; }
-
-        public bool UsePassword { get; set; }
-
-        public string Password { get; set; }
+        public bool             usePassword;
+        public string           password;
     }
 }

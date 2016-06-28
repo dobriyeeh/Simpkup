@@ -21,10 +21,16 @@ namespace BackupService
         {
             var dataAction = new DataAction(_dataPlace);
 
-            if (_config.ArchiveData)
-                dataAction.ArchiveTo(_config.BackupFrom);
-            else
-                dataAction.CopyTo(_config.BackupFrom);
+            switch (_config.backupMethod)
+            {
+                case BackupMethod.Archive:
+                    dataAction.ArchiveTo(_config.backupFromPath);
+                    break;
+
+                case BackupMethod.Copy:
+                    dataAction.CopyTo(_config.backupFromPath);
+                    break;
+            }
         }
     }
 }

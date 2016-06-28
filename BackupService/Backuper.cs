@@ -20,7 +20,12 @@ namespace BackupService
         public void Update()
         {
             if (_backupRule.IsItTimeToBackup)
+            {
                 _backupAction.Backup();
+                //TODO update of time checking
+                //TODO add specific time
+                //_backupRule.re
+            }
         }
 
     }

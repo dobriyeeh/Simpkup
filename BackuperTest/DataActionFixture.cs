@@ -68,9 +68,8 @@ namespace BackuperTest
         //[Test]
         public void PerformanceArchive()
         {
-            var dataAction = new DataAction(@"C:\!Projects\MBClub\Backuper\BackuperTest\testdata");
+            var dataAction = new DataAction(_testedData.PerformanceDataPath);
             dataAction.ArchiveTo(_testedData.DirDestination + "\\PerformanceTest.zip");
         }
-
     }
 }

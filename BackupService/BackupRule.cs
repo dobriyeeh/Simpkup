@@ -11,25 +11,42 @@ namespace BackupService
         private readonly DataPlace  _dataPlace;
         private readonly Config     _config;
 
-        private DirectoryIdentity   _initalIdentity;
+        private DirectoryIdentity   _pastIdentity;
 
-        public bool IsTimeOverdue    => (DateTime.Now - _initalIdentity.SnapshotTime) > _config.ScheduleTime;
+        private bool AreFilesChanged()
+        {
+            var  actualIdentity = _dataPlace.ActualIdentity;
+            bool result         = !_pastIdentity.Equals(_dataPlace.ActualIdentity);
+            _pastIdentity       = actualIdentity;
 
-        public bool AreFilesChanged  => !_initalIdentity.Equals(_dataPlace.ActualIdentity);
+            return result;
+        }
 
-        public bool IsItTimeToBackup => IsTimeOverdue || AreFilesChanged;
+        public bool IsItTimeToBackup
+        {
+            get
+            {
+                switch (_config.backupCondition)
+                {
+                    case BackupCondition.AlwaysSchedulePeriod:
+                    case BackupCondition.AlwaysAtTheCertainTime:
+                        return true;
+
+                    case BackupCondition.SchedulePeriodIfChanged:
+                    case BackupCondition.AtTheCertainTimeIfChanged:
+                        return AreFilesChanged();
+                }
+
+                throw new Exception("condition is missed");
+            }
+        }
         
         public BackupRule(DataPlace dataPlace, Config config)
         {
-            _dataPlace  = dataPlace;
-            _config     = config;
+            _dataPlace              = dataPlace;
+            _config                 = config;
 
-            Reset();
-        }
-
-        public void Reset()
-        {
-            _initalIdentity = _dataPlace.ActualIdentity;
+            _pastIdentity           = _dataPlace.ActualIdentity;
         }
     }
 }

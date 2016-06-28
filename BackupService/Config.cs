@@ -20,6 +20,41 @@ namespace BackupService
         Copy
     }
 
+    public struct ReactionTime
+    {
+        public int hour;
+        public int minute;
+
+        public TimeSpan TimeLeftBeforeEvent(DateTime eventTime)
+        {
+            int needHour   = hour   != -1 ? hour   : eventTime.Hour;
+            int needMinute = minute != -1 ? minute : eventTime.Minute;
+
+            DateTime reaction;
+
+            if ((eventTime.Hour > needHour) || 
+                ((eventTime.Hour == needHour) && (eventTime.Minute > needMinute)))
+            {
+                reaction = new DateTime(eventTime.Year, eventTime.Month, eventTime.Day, needHour, needMinute, 0);
+            }
+            else
+            {
+                var oneDay = TimeSpan.FromDays(1);
+                var nextDate = eventTime + oneDay;
+
+                reaction = new DateTime(nextDate.Year, nextDate.Month, nextDate.Day, needHour, needMinute, 0);
+            }
+
+            var result = reaction - eventTime;
+            if (result.TotalMinutes < 0)
+            {
+
+            }
+
+            return result;
+        }
+    }
+
     public struct Config
     {
         public string           backupFromPath;
@@ -29,7 +64,7 @@ namespace BackupService
         public BackupMethod     backupMethod;
 
         public TimeSpan         schedulePeriod;
-        public DateTime         certainTime;
+        public ReactionTime     reactionTime;
 
         public bool             usePassword;
         public string           password;

@@ -14,6 +14,35 @@ namespace BackuperTest
     [TestFixture]
     class TimeControllerFixture
     {
+
+        [Test]
+        public void TestCalculationTimeToEvent()
+        {
+            var reactionTime1 = new ReactionTime
+            {
+                hour   = 5,
+                minute = 25
+            };
+
+            var reactionTime2 = new ReactionTime
+            {
+                hour   = 15,
+                minute = -1
+            };
+
+            var leftToEvent1 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 6, 30, 0));
+            Assert.AreEqual(leftToEvent1, new TimeSpan(1, 5, 0));
+            
+            var leftToEvent2 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 6, 0, 0));
+            Assert.AreEqual(leftToEvent2, new TimeSpan(0, 35, 0));
+
+            var leftToEvent3 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 4, 25, 0));
+            var leftToEvent4 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 4, 25, 0));
+            var leftToEvent5 = reactionTime2.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 4, 25, 0));
+            var leftToEvent6 = reactionTime2.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 16, 25, 0));
+
+        }
+
         [Test]
         public void TestTimeContoroller()
         {

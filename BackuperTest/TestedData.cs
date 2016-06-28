@@ -80,11 +80,5 @@ namespace BackuperTest
             if (Directory.Exists(DirDestination))
                 Directory.Delete(DirDestination, true);
         }
-
-        [Test]
-        public void TempTest()
-        {
-            DateTime test = new DateTime(-1, 2, 3);
-        }
     }
 }

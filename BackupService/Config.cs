@@ -24,28 +24,33 @@ namespace BackupService
     {
         public int hour;
         public int minute;
+        public int second;
 
-        public TimeSpan TimeLeftBeforeEvent(DateTime eventTime)
+        public static ReactionTime Defalt => new ReactionTime() { hour = -1, minute = -1, second = -1 };
+
+        public TimeSpan TimeLeftBeforeEvent(DateTime fromTime)
         {
-            int needHour   = hour   != -1 ? hour   : eventTime.Hour;
-            int needMinute = minute != -1 ? minute : eventTime.Minute;
+            int needHour   = hour   != -1 ? hour   : fromTime.Hour;
+            int needMinute = minute != -1 ? minute : fromTime.Minute;
+            int needSecond = second != -1 ? second : fromTime.Second; 
 
             DateTime reaction;
 
-            if ((eventTime.Hour < needHour) || 
-                ((eventTime.Hour == needHour) && (eventTime.Minute < needMinute)))
+            if ((fromTime.Hour < needHour) || 
+                ((fromTime.Hour == needHour) && (fromTime.Minute < needMinute)) ||
+                ((fromTime.Hour == needHour) && (fromTime.Minute == needMinute) && (fromTime.Second < needSecond)))
             {
-                reaction = new DateTime(eventTime.Year, eventTime.Month, eventTime.Day, needHour, needMinute, 0);
+                reaction = new DateTime(fromTime.Year, fromTime.Month, fromTime.Day, needHour, needMinute, needSecond);
             }
             else
             {
                 var oneDay = TimeSpan.FromDays(1);
-                var nextDate = eventTime + oneDay;
+                var nextDate = fromTime + oneDay;
 
-                reaction = new DateTime(nextDate.Year, nextDate.Month, nextDate.Day, needHour, needMinute, 0);
+                reaction = new DateTime(nextDate.Year, nextDate.Month, nextDate.Day, needHour, needMinute, needSecond);
             }
 
-            var result = reaction - eventTime;
+            var result = reaction - fromTime;
 
             return result;
         }

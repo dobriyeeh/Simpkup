@@ -32,7 +32,7 @@ namespace BackupService
                 case BackupCondition.AlwaysAtTheCertainTime:
                 case BackupCondition.AtTheCertainTimeIfChanged:
                     duePeriod   = _config.schedulePeriod;
-                    dueTime     = _config.schedulePeriod;
+                    dueTime     = _config.reactionTime.TimeLeftBeforeEvent(DateTime.Now);
                     break;
             }
 

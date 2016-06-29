@@ -32,8 +32,8 @@ namespace BackupService
 
             DateTime reaction;
 
-            if ((eventTime.Hour > needHour) || 
-                ((eventTime.Hour == needHour) && (eventTime.Minute > needMinute)))
+            if ((eventTime.Hour < needHour) || 
+                ((eventTime.Hour == needHour) && (eventTime.Minute < needMinute)))
             {
                 reaction = new DateTime(eventTime.Year, eventTime.Month, eventTime.Day, needHour, needMinute, 0);
             }
@@ -46,10 +46,6 @@ namespace BackupService
             }
 
             var result = reaction - eventTime;
-            if (result.TotalMinutes < 0)
-            {
-
-            }
 
             return result;
         }

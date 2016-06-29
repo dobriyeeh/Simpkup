@@ -31,16 +31,16 @@ namespace BackuperTest
             };
 
             var leftToEvent1 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 6, 30, 0));
-            Assert.AreEqual(leftToEvent1, new TimeSpan(1, 5, 0));
+            Assert.AreEqual(leftToEvent1, new TimeSpan(22, 55, 0));
             
-            var leftToEvent2 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 6, 0, 0));
-            Assert.AreEqual(leftToEvent2, new TimeSpan(0, 35, 0));
+            var leftToEvent2 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 5, 0, 0));
+            Assert.AreEqual(leftToEvent2, new TimeSpan(0, 25, 0));
 
-            var leftToEvent3 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 4, 25, 0));
-            var leftToEvent4 = reactionTime1.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 4, 25, 0));
-            var leftToEvent5 = reactionTime2.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 4, 25, 0));
-            var leftToEvent6 = reactionTime2.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 16, 25, 0));
+            var leftToEvent3 = reactionTime2.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 4, 25, 0));
+            Assert.AreEqual(leftToEvent3, new TimeSpan(11, 0, 0));
 
+            var leftToEvent4 = reactionTime2.TimeLeftBeforeEvent(new DateTime(2016, 1, 1, 16, 25, 0));
+            Assert.AreEqual(leftToEvent4, new TimeSpan(23, 0, 0));
         }
 
         [Test]

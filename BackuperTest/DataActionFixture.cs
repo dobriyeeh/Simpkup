@@ -65,6 +65,18 @@ namespace BackuperTest
             Assert.Catch<IOException>(() => dataAction.CopyTo(copyPath));
         }
 
+        [Test]
+        public void TestPasswordArchive()
+        {
+            var    dataAction   = new DataAction(_dataPlace);
+            string archivePath  = _testedData.DirDestination + "\\mytest.zip";
+            dataAction.ArchiveTo(archivePath);
+
+            var    verificator  = new DataVerificator(_testedData);
+            Assert.IsTrue(verificator.testArchive(archivePath));
+        }
+
+
         //[Test]
         public void PerformanceArchive()
         {

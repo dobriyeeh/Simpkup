@@ -28,6 +28,25 @@ namespace BackupService
             ZipFile.CreateFromDirectory(Data.Path, pathTo, CompressionLevel.Optimal, true);
         }
 
+        public void ArchiveTo(string pathTo, string password)
+        {
+            using (ZipFile zip = new ZipFile())
+            {
+                zip.Password = "mypassword";
+
+                string[] Files = Directory.GetFiles(cryptPath, "*.*");
+                foreach (string f in Files)
+                {
+                    zip.AddFile(f);
+                }
+
+                zip.Save(cryptPath + @"\output.zip");
+            }
+
+            ZipFile.CreateFromDirectory(Data.Path, pathTo, CompressionLevel.Optimal, true);
+        }
+
+
         public void CopyTo(string pathTo)
         {
             //Now Create all of the directories

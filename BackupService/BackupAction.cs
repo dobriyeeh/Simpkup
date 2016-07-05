@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BackupService
 {
-    class BackupAction : IBackupAction
+    public class BackupAction : IBackupAction
     {
         private readonly DataPlace _dataPlace;
         private readonly Config _config;
@@ -24,7 +24,10 @@ namespace BackupService
             switch (_config.backupMethod)
             {
                 case BackupMethod.Archive:
-                    dataAction.ArchiveTo(_config.backupFromPath);
+                    if (_config.usePassword)
+                        dataAction.ArchiveTo(_config.backupToPath, _config.password);
+                    else
+                        dataAction.ArchiveTo(_config.backupToPath);
                     break;
 
                 case BackupMethod.Copy:

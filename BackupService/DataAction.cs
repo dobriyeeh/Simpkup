@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.IO.Compression;
+using DotZip = Ionic.Zip;
 
 namespace BackupService
 {
@@ -25,27 +26,37 @@ namespace BackupService
 
         public void ArchiveTo(string pathTo)
         {
-            ZipFile.CreateFromDirectory(Data.Path, pathTo, CompressionLevel.Optimal, true);
+            ArchiveTo(pathTo, null);
         }
 
         public void ArchiveTo(string pathTo, string password)
         {
-            using (ZipFile zip = new ZipFile())
+            using (var zip = new DotZip.ZipFile())
             {
-                zip.Password = "mypassword";
-
-                string[] Files = Directory.GetFiles(cryptPath, "*.*");
-                foreach (string f in Files)
+                if (!string.IsNullOrEmpty(password))
                 {
-                    zip.AddFile(f);
+                    zip.Password   = password;
+                    zip.Encryption = DotZip.EncryptionAlgorithm.WinZipAes256;
                 }
 
-                zip.Save(cryptPath + @"\output.zip");
+                string rootDir = new DirectoryInfo(Data.Path).Name;
+
+                var files = Directory.GetFiles(Data.Path, "*", SearchOption.AllDirectories);
+                foreach (var currFile in files)
+                {
+                    string currDir = Path.GetDirectoryName(currFile);
+                    string relativePath = currDir.Length > Data.Path.Length ? currDir.Substring(Data.Path.Length + 1) : "";
+                    if (string.IsNullOrEmpty(relativePath))
+                        relativePath = rootDir;
+                    else
+                        relativePath = rootDir + "\\" + relativePath;
+
+                    zip.AddFile(currFile, relativePath);
+                }
+
+                zip.Save(pathTo);
             }
-
-            ZipFile.CreateFromDirectory(Data.Path, pathTo, CompressionLevel.Optimal, true);
         }
-
 
         public void CopyTo(string pathTo)
         {

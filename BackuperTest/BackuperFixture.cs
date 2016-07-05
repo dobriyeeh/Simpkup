@@ -7,6 +7,7 @@ using System.Threading;
 using NUnit.Framework;
 using Moq;
 using BackupService;
+using System.IO;
 
 namespace BackuperTest
 {
@@ -52,6 +53,28 @@ namespace BackuperTest
 
             actionMock.Verify(act => act.Backup(), Times.Once);
         }
+
+        [Test]
+        public void TestEncryptedArchives()
+        {
+            var newConfig           = _config;
+            newConfig.usePassword   = true;
+            newConfig.password      = "qwerty";
+            newConfig.backupToPath += "\\test.zip";
+
+
+            var backupRule          = new BackupRule(_dataPlace, newConfig);
+            var backupAction        = new BackupAction(_dataPlace, newConfig);
+
+            var backuper            = new Backuper(backupAction, backupRule);
+
+            backupAction.Backup();
+
+            var verificator         = new DataVerificator(_testedData);
+            Assert.Catch<InvalidDataException>(() => verificator.testArchive(newConfig.backupToPath));
+            Assert.IsTrue(verificator.testEncryptedArchive(newConfig.backupToPath, newConfig.password));
+        }
+
 
         public void TestDataKeeper()
         {

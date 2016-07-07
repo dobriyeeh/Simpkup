@@ -77,11 +77,32 @@ namespace BackuperTest
         }
 
 
-        //[Test]
+        [Test]
+        [Ignore ("long time test")]
         public void PerformanceArchive()
         {
             var dataAction = new DataAction(_testedData.PerformanceDataPath);
             dataAction.ArchiveTo(_testedData.DirDestination + "\\PerformanceTest.zip");
         }
+
+        [Test]
+        public void TestLockFile()
+        {
+            using (FileStream fileStream = new FileStream(
+                _testedData.PreparedFiles[0], 
+                FileMode.OpenOrCreate, 
+                FileAccess.ReadWrite, 
+                FileShare.ReadWrite))
+            {
+                var     dataAction  = new DataAction(_dataPlace);
+                string  archivePath = _testedData.DirDestination + "\\mytest.zip";
+                dataAction.ArchiveTo(archivePath);
+
+                var     verificator = new DataVerificator(_testedData);
+                Assert.IsTrue(verificator.testArchive(archivePath));
+            }
+        }
+
+
     }
 }
